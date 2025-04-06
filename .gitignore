@@ -2,3 +2,22 @@
 /dist/
 node_modules/
 yarn-error.log
+
+# dotenv environment variables file
+.env
+
+# BQ connection
+bq-service-account.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Output of 'npm pack'
+*.tgz
