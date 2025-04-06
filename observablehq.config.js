@@ -12,6 +12,12 @@ export default {
       pages: [
         {name: "Dashboard sample", path: "/dashboard"},
       ]
+    },
+    {
+      name: "Sample files",
+      pages: [
+        {name: "Sample", path: "/example-dashboard"},
+      ]
     }
   ],
 
