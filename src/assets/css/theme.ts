@@ -1,0 +1,58 @@
+export const theme = {
+  name: "Default Theme",
+  type: "light",
+  schemes: {
+    categorical: [
+      "#4269d0",
+      "#efb118",
+      "#ff725c",
+      "#6cc5b0",
+      "#3ca951",
+      "#ff8ab7",
+      "#a463f2",
+      "#97bbf5",
+      "#9c6b4e",
+      "#9498a0",
+    ],
+    divergent: ["#fc8d59", "#ffffbf", "#91bfdb"],
+    sequential: ["#deebf7", "#9ecae1", "#3182bd"],
+    neutralColor: "#DCD2CC",
+    otherCategory: "#ADA69F",
+  },
+  ui: {
+    background: "#FFFFFF",
+    backgroundHighlight: "#F3EFED",
+    textColor: "#5F2936",
+    linkColor: "#5F2936",
+    highlightColor: "#5F2936",
+    borderRadius: 10,
+  },
+  typography: {
+    fontFamily: "Nunito",
+    fontSize: {
+      headline: 24,
+      subheadline: 18,
+      body: 16,
+      dataLabel: 12,
+      dataSource: 12,
+    },
+  },
+  axis: {
+    lineColor: "#808F98",
+    gridColor: "#E7E7E7",
+    labelColor: "#808F98",
+    fontSize: {
+      metric: 11,
+      categorical: 14,
+      unitLabel: 10,
+      axisTitle: 14,
+    },
+  },
+  tooltip: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#808F98",
+    borderRadius: 5,
+    textColor: "#5F2936",
+    fontSize: 14,
+  },
+};

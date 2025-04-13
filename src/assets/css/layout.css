@@ -1,0 +1,35 @@
+.grid {
+  margin: 4rem 2rem;
+}
+
+section {
+  margin: 4rem 0;
+}
+
+section.clear {
+    background-color: white;
+    padding: 1px 0;
+}
+
+section.logout {
+  text-align: center;
+    /* background-color: white; */
+    padding: 1px;
+}
+
+section.login {
+  text-align: center;
+}
+
+section h2 {
+  padding-top: 2rem;
+  margin: 0 0 0.5rem 3rem
+}
+section p {
+
+  margin: 0.5rem 0 0.5rem 3rem
+}
+
+svg {
+  margin: 2rem;
+}

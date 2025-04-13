@@ -1,0 +1,16 @@
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css");
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
+
+@import url("hero.css");
+@import url("theme.css");
+@import url("theme-overwrites.css");
+@import url("typography.css");
+@import url("layout.css");
+@import url("navigation.css");
+@import url("date-range.css");
+@import url("scorecards.css");
+
+

@@ -1,0 +1,60 @@
+.date-range {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 4rem;
+}
+
+.date-range label {
+  display: inline-block;
+  margin: 0.5rem 0.5em 0.5rem 0;
+  padding: 1em 2em;
+  font-size: 1em;
+  color: var(--theme-foreground-alt);
+  border-radius: 0.25em;
+  background: var(--theme-background-alt);
+  transition: 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.date-range label:hover {
+  background: var(--theme-foreground-faintest);
+}
+
+.date-range label:has(input:checked) {
+  background: var(--theme-hero-highlight);
+  color: var(--theme-background-alt);
+  font-weight: 700;
+}
+
+.date-range label:has(input:checked):hover {
+  background: var(--theme-hero-highlight-hover);
+}
+
+.date-range input {
+  display: none;
+}
+
+.date-range-label {
+  margin: 0.5rem 1rem;
+  color: var(--theme-background-alt);
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .date-range {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .date-range-label {
+    margin: 0.25rem 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .date-range label {
+    width: 100px;
+  }
+}

@@ -34,6 +34,7 @@ export default {
   // sidebar: true, // whether to show the sidebar
   toc: false, // whether to show the table of contents
   pager: false, // whether to show previous & next links in the footer
+  style: "assets/css/style.css",
   // output: "dist", // path to the output root for build
   // search: true, // activate search
   // linkify: true, // convert URLs in Markdown to links

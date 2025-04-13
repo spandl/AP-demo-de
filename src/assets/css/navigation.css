@@ -1,0 +1,49 @@
+a.button {
+  padding: 1rem 2rem;
+  background-color: #f0eeeb;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+a.button.strong {
+  padding: 1rem 2rem;
+  display: inline-block;
+  margin: 2em 0;
+  background-color: var(--theme-foreground-focus);
+  color: var(--theme-background-hilight);
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: var(--theme-box-shadow);
+  cursor: pointer;
+}
+
+a[href] {
+  color: #3b3327;
+}
+
+/* Content link */
+.content-link-container {
+  box-sizing: border-box;
+  width: 100%;
+  text-align: right;
+  padding: 1rem 2rem;
+}
+
+a.content-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #2a8b8b;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+a.content-link::before {
+  content: "\e5c8"; /* Material Icons arrow code */
+  font-family: "Material Icons";
+  margin-right: 0.5rem;
+}
+
+a.content-link:hover {
+  text-decoration: none;
+}

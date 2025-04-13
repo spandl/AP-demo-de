@@ -9,13 +9,20 @@
     "observable": "observable"
   },
   "dependencies": {
+    "@formatjs/intl-durationformat": "^0.7.3",
     "@google-cloud/bigquery": "^7.9.3",
     "@observablehq/framework": "^1.13.2",
+    "@observablehq/plot": "^0.6.17",
+    "d3": "^7.9.0",
     "d3-dsv": "^3.0.1",
     "d3-time-format": "^4.1.0",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/d3-time": "^3.0.4",
+    "@types/lodash": "^4.17.16",
     "rimraf": "^5.0.5"
   },
   "engines": {

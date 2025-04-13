@@ -1,0 +1,60 @@
+:root {
+  --theme-hero-highlight: rgb(26, 91, 123);
+  --theme-hero-highlight-hover: color-mix(
+    in srgb,
+    var(--theme-hero-highlight) 80%,
+    black
+  );
+  --theme-background-hilight: white;
+  --theme-background-alt: #eff1f2;
+  --theme-foreground-focus: #3FA0B1;
+  --theme-background-canvas: color-mix(
+    in srgb,
+    var(--theme-background-alt) 75%,
+    white
+  );
+  --theme-box-shadow: 8px 0px 24px rgba(0, 0, 0, 0.1);
+  --observablehq-max-width: 1600px;
+  --sans-serif: "Inter Tight", -apple-system, BlinkMacSystemFont, helvetica,
+    "helvetica neue", roboto, noto, "segoe ui", arial, sans-serif;
+}
+
+body {
+  font-family: var(--sans-serif);
+}
+
+html {
+  background-color: var(--theme-background-alt);
+  /* background-color: var(--theme-background); */
+}
+
+#observablehq-main {
+  margin: 0 auto;
+}
+
+#observablehq-footer {
+  margin-top: 5rem;
+}
+#observablehq-footer div{
+  margin: 2rem auto;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+#observablehq-center {
+  background-color: var(--theme-background-canvas);
+  margin: 0;
+  box-shadow: 8px 0px 24px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  padding-right: 0 !important;
+}
+
+#observablehq-sidebar-toggle:indeterminate ~ #observablehq-center {
+  --observablehq-inset-left: calc(272px);
+}
+
+.observablehq-link a[href] {
+  
+  border-radius: 5px;
+  margin: 2px 0;
+}
