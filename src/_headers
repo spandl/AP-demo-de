@@ -1,2 +1,2 @@
-/*
-  Basic-Auth: demouser demopass
+/protected/*
+  Basic-Auth: demouser:demopass
