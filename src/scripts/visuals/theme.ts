@@ -3,7 +3,7 @@ export const theme = {
   type: "light",
   schemes: {
     categorical: [
-      "#4269d0",
+      "#3FA0B1",
       "#efb118",
       "#ff725c",
       "#6cc5b0",
@@ -14,7 +14,7 @@ export const theme = {
       "#9c6b4e",
       "#9498a0",
     ],
-    divergent: ["#fc8d59", "#ffffbf", "#91bfdb"],
+    divergent: ["#fc8d59", "#e1f0f2", "#3FA0B1"],
     sequential: ["#deebf7", "#9ecae1", "#3182bd"],
     neutralColor: "#DCD2CC",
     otherCategory: "#ADA69F",

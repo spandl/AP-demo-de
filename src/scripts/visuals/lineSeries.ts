@@ -1,17 +1,8 @@
 import * as Plot from "@observablehq/plot";
+import { groupData } from "../groupData.js";
 import { formatDate } from "../format.js";
-
-/* 
-EXPERIMENT
-* Change interval based on space (day / week / month / etc.)
-*/
-
-/* 
-TODO
-Group data based on accessor (without top X)
-*/
-
 import type { IDataSet, IGenericVizStyles, IVizSize } from "./types.js";
+import { theme } from "./theme.js";
 
 interface ILinesSeriesAccessors {
   date: string;
@@ -31,6 +22,16 @@ export const lineSeriesCompare = {
     const { width } = size;
     const margin = { left: 20, right: 20 };
 
+    const groupedData = groupData(
+      data,
+      {
+        dimensionKeys: [accessors.date],
+        metricKeys: [accessors.metric],
+      },
+      "sum"
+    )
+    .sort((a, b) => b[accessors.date] - a[accessors.date]);
+
     const lineChart = Plot.plot({
       width: width - margin.left - margin.right,
       style: "overflow: visible;",
@@ -42,21 +43,17 @@ export const lineSeriesCompare = {
       },
       marks: [
         // Date range
-        Plot.lineY(data, {
+        Plot.lineY(groupedData, {
           x: date,
           y: metric,
-          stroke: "#4269d0",
+          stroke: theme.schemes.categorical[0],
           strokeWidth: baseConfig.elements[1].defaultValue,
           curve: baseConfig.elements[0].defaultValue as Plot.Curve,
-          marker: "circle",
+          marker: "circle-stroke",
           channels: {
             ["Date"]: (d) =>
               formatDate(d[date], {
                 options: {
-                  /* 
-                    EXPERIMENT
-                    * Change interval based on space (day / week / month / etc.)
-                    */
                   dateStyle: "medium",
                 },
               }),
@@ -79,10 +76,11 @@ export const lineSeriesCompare = {
           },
         }),
         // Compare date range
-        Plot.lineY(data, {
+        Plot.lineY(groupedData, {
           x: date,
           y: compareMetric,
-          stroke: "#DCD2CC",
+          stroke: theme.schemes.categorical[0],
+          opacity: 0.5,
           strokeDasharray: "5 5",
           strokeWidth: 2,
           curve: baseConfig.elements[0].defaultValue as Plot.Curve,

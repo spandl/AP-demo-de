@@ -103,7 +103,10 @@ const pageViewsScorecard = scoreCards.number({
 });
 
 // DURATION
-const duration = d3.mean(sessionDataCompare, (d) => d.time_session_duration_s_avg);
+const duration = d3.mean(
+  sessionDataCompare,
+  (d) => d.time_session_duration_s_avg
+);
 
 const durationScorecard = scoreCards.number({
   title: "Average session duration",
@@ -144,7 +147,8 @@ const options = {
     width,
   },
 };
-const barChart = (width) => horizontalBarChart.create(eventDataCompare, options);
+const barChart = (width) =>
+  horizontalBarChart.create(eventDataCompare, options);
 ```
 
 ```js
@@ -171,7 +175,10 @@ const threshold = 0.5;
 const heatmap = (width) =>
   calendarHeatmap.create(
     eventDataCompare,
-    null,
+    {
+      date: "event_date",
+      metric: "record_count",
+    },
     {
       targets: {
         threshold: 50,
@@ -182,10 +189,26 @@ const heatmap = (width) =>
 ```
 
 <section>
-  <h2>Page views variations</h2>
-  <p>+/- ${d3.format(".0%")(threshold)} variation, compared to previous date range</p>
+  <h2>Daily page views</h2>
+  <p>View traffic per weekday</p>
   <div>${resize((width) => heatmap(width)) }</div>
-  <!-- <div class="content-link-container">
-    <a href="./dashboard/traffic-trends" class="content-link">sessions & events</a>
-  </div> -->
+</section>
+
+```js
+import { lineSeriesCompare } from "./scripts/visuals/lineSeries.js";
+const timeSeries = (width) =>
+  lineSeriesCompare.create(
+    sessionDataCompare,
+    {
+      date: "session_date",
+      metric: "record_count",
+    },
+    {},
+    { width }
+  );
+```
+
+<section>
+  <h2>Sessions over time</h2>
+  <div>${resize((width) => timeSeries(width)) }</div>
 </section>

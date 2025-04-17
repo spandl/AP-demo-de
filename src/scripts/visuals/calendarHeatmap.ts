@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 import * as Plot from "@observablehq/plot";
+import { groupData } from "../groupData.js";
+import { theme } from "./theme.js";
 import {
   formatWeekDay,
   getDateRangeFromWeek,
@@ -7,21 +9,17 @@ import {
   formatNumber,
 } from "../format.js";
 
-import type {
-  IGenericVizStyles,
-  IDataSet,
-  IDataAccessors,
-  IVizSize,
-} from "./types.js";
+import type { IGenericVizStyles, IDataSet, IVizSize } from "./types.js";
 
-const remInPixels = parseFloat(
-  getComputedStyle(document.documentElement).fontSize
-);
+interface IDataAccessors {
+  date: string;
+  metric: string;
+}
 
 export const calendarHeatmap = {
   create: (
     data: IDataSet[],
-    accessors: IDataAccessors | undefined,
+    accessors: IDataAccessors,
     config: IGenericVizStyles,
     size: IVizSize
   ) => {
@@ -29,9 +27,18 @@ export const calendarHeatmap = {
     const { width } = size;
     const marginLeft = width > 600 ? width * 0.333 : width * 0.2;
 
+    const groupedData = groupData(
+      data,
+      {
+        dimensionKeys: [accessors.date],
+        metricKeys: [accessors.metric],
+      },
+      "sum"
+    );
+
     const yCount = [
       ...new Set(
-        data.map(
+        groupedData.map(
           (d) =>
             `${d3.utcFormat("%Y")(d.event_date)} | ${d3.utcFormat("%W")(
               d.event_date
@@ -44,19 +51,21 @@ export const calendarHeatmap = {
 
     const xAccessor = (d: IDataSet) =>
       `${Number(d3.utcFormat("%u")(d.event_date)) - 1}`;
+
     const yAccessor = (d: IDataSet) =>
       `${d3.utcFormat("%Y")(d.event_date)} | ${d3.utcFormat("%W")(
         d.event_date
       )}`;
 
-    const growth = (d: IDataSet[]) =>
-      d3.sum(d, (i: IDataSet) => i.record_count);
-
     const heatmap = Plot.plot({
       width: width - 4 * remInPixels,
-      height, //yCount * cellSize,
+      height,
       marginLeft,
       padding: 0.175,
+      color: {
+        domain: [0, d3.max(groupedData, d => d[accessors.metric])],
+        range: [theme.schemes.divergent[1], theme.schemes.divergent[2]],
+      },
       x: {
         type: "band",
       },
@@ -82,86 +91,64 @@ export const calendarHeatmap = {
           fontSize: 12,
           label: null,
           tickSize: 0,
-          tickFormat: (d) =>
-            formatWeekDay(Number(d), {style: "short" }),
+          tickFormat: (d) => formatWeekDay(Number(d), { style: "short" }),
         }),
 
-        Plot.cell(
-          data,
-          Plot.group(
-            {
-              fill: (d: number[]) => {
-                const total = d3.sum(d);
-                if (total >= threshold) return "#3FA0B1";
-                if (total < threshold) return "#F17F15";
-                return "#D9D9D9";
-              },
+        Plot.cell(groupedData, {
+          x: xAccessor,
+          y: yAccessor,
+          fill: accessors.metric,
+          r: 5,
+          channels: {
+            ["Date"]: (d) => {
+              return formatDate(d[accessors.date], {
+                options: {
+                  dateStyle: "long",
+                },
+              });
             },
-            {
-              x: xAccessor,
-              y: yAccessor,
-              fill: "record_count",
-
-              channels: {
-                ["Date"]: (d) => {
-                  return formatDate(d[0].event_date);
+            ["Weekday"]: (d) => {
+              return formatDate(d[accessors.date], {
+                options: {
+                  weekday: "long",
                 },
-                ["Weekday"]: (d) => {
-                  return formatDate(d[0].event_date, {
-                    options: {
-                      weekday: "long",
-                    },
-                  });
-                },
-                ["Total"]: (d) => d3.sum(d, (i: IDataSet) => i.record_count),
-              },
-              r: 5,
-
-              tip: {
-                format: {
-                  x: false,
-                  y: false,
-                },
-                lineHeight: 1.4,
-                fontSize: 12,
-              },
-            }
-          )
-        ),
-
-        Plot.text(
-          data,
-          Plot.group(
-            {
-              fill: (d: IDataSet[]) => {
-                const total = growth(d);
-// debugger
-                if (total >= threshold) return "white";
-                if (total < threshold) return "darkslategrey";
-                return "white";
-              },
-              text: (d: IDataSet[]) =>
-                formatNumber(growth(d)),
-              // filter: (d: IDataSet[]) => {
-              //   const total = growth(d);
-              //   if (total === 0) return false;
-              //   return (
-              //     (total >= threshold || total <= -threshold) &&
-              //     Number.isFinite(total)
-              //   );
-              // },
+              });
             },
-            {
-              x: xAccessor,
-              y: yAccessor,
-              fontSize: width > 800 ? 12 : 12 * 0.8,
-              fontWeight: 700,
-            }
-          )
-        ),
+            ["Total"]: (d) => formatNumber(d[accessors.metric]),
+          },
+          tip: {
+            format: {
+              x: false,
+              y: false,
+              fill: false
+            },
+            lineHeight: 1.4,
+            fontSize: 12,
+          },
+        }),
+
+        Plot.text(groupedData, {
+          x: xAccessor,
+          y: yAccessor,
+          text: (d: IDataSet) => formatNumber(d[accessors.metric]),
+          fill: (d: IDataSet) => {
+            if (d[accessors.metric] >= threshold) return theme.ui.background;
+            return theme.ui.textColor;
+          },
+          opacity: (d: IDataSet) => {
+            if (d[accessors.metric] >= threshold) return 1;
+            return 0.75;
+          },
+          fontSize: width > 800 ? 12 : 12 * 0.8,
+          fontWeight: 700,
+        }),
       ],
     });
 
     return heatmap;
   },
 };
+
+const remInPixels = parseFloat(
+  getComputedStyle(document.documentElement).fontSize
+);
