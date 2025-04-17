@@ -2,8 +2,8 @@ name: Build Site
 
 on:
   schedule:
-    # - cron: "0 10 * * *"  # 5:00 AM EST = 010:00 UTC > After Dataform execution
-    - cron: "*/5 * * * *"  # Every 5 minutes for testing
+    - cron: "0 10 * * *"  # 5:00 AM EST = 010:00 UTC > After Dataform execution
+    # - cron: "*/5 * * * *"  # Every 5 minutes for testing
   workflow_dispatch: {}
 
 jobs:
