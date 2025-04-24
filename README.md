@@ -1,18 +1,70 @@
 # Observaable Framework starter kit
+This is an adaptation of a [Observable Framework](https://observablehq.com/framework/) app that fetches data from BigQuery tables, created by [GA4 Data Form](https://ga4dataform.com/)
 
-This is an [Observable Framework](https://observablehq.com/framework/) app. To install the required dependencies, run:
+## Clone the repo
+`git clone git@github.com:spandl/observable-starter.git`
 
-```
-npm install
-```
+and go into the directory
 
-Then, to start the local preview server, run:
+`cd observable-starter`
 
-```
-npm run dev
-```
+## Get secrets to connect to BigQuery tables
+
+See the `sample.env` file for required secrets
+
+### BQ_CLIENT_EMAIL and BQ_PRIVATE_KEY:
+
+* Go to Google Cloud Console
+* Navigate to "IAM & Admin" > "Service Accounts"
+* Either create a new service account or use an existing one
+* For a new service account:
+  * Click "Create Service Account"
+  * Give it a name and description
+  * Grant necessary roles (at minimum "BigQuery Data Viewer" for read access)
+  * Click "Create and Continue"
+* To get the credentials:
+  * Find your service account in the list
+  * Click the three dots (⋮) menu on the right
+  * Select "Manage Keys"
+  * Click "Add Key" > "Create new key"
+  * Choose JSON format
+  * Download the JSON file
+
+The JSON file will contain both the client_email and private_key
+
+### TABLE_PATH
+
+* Go to BigQuery in Google Cloud Console
+* Navigate to your dataset where GA4 Dataform created the tables
+* The path will be in format: project-id.dataset_name
+* You can copy this from the BigQuery UI when viewing your dataset
+
+## Install dependencies
+To install the required dependencies, run:
+`npm install`
+
+## Preview the dashboard
+`npm run dev`
 
 Then visit <http://localhost:3000> to preview your app.
+
+## Steps to deploy the application on Netlify
+* initialize git `git init`
+* Change your remote address with `git remote set-url origin git@github.com:xxx` and validate with `git remote -v`
+* Push your code to a GitHub account
+* Create an [netlify account](https://www.netlify.com/)
+* Add a new site from template
+  * Connect with your Github repo
+  * Import your environment variables from `.env` file 
+
+## Setup daily builds
+The repo contains a daily build file in `.github/workflows/daily-build.yml`.
+To trigger these build command on a daily base:
+* Create a build hook in Netlify
+    * Site configurations > Build and deploy > Build hooks
+* Create a secret in Github, called `NETLIFY_BUILD_HOOK` with the value (URL) of the build hook
+
+## Getting started guide by Observable
 
 For more, see <https://observablehq.com/framework/getting-started>.
 
@@ -54,6 +106,5 @@ A typical Framework project looks like this:
 | `npm install`            | Install or reinstall dependencies                        |
 | `npm run dev`        | Start local preview server                               |
 | `npm run build`      | Build your static site, generating `./dist`              |
-| `npm run deploy`     | Deploy your app to Observable                            |
 | `npm run clean`      | Clear the local data loader cache                        |
 | `npm run observable` | Run commands like `observable help`                      |
