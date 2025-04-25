@@ -71,7 +71,7 @@ const currentDateRangeString = dateRangeSelector.getCurrentDateRange(
     />
   </div>
   <div class="headline">
-    <h1>Traffic analysis dashboard</h1>
+    <h1>AP DEMO: Traffic analysis dashboard</h1>
     <p>r42 web properties – compared to previous date range</p>
     <div class="date-range">${ dateRangeInputs }<span class="date-range-label">${currentDateRangeString}</span></div>
   </div>
